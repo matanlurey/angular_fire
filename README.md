@@ -5,7 +5,7 @@
   </p>
 </p>
 
-[![pub package](https://img.shields.io/pub/v/angular_fire)](https://pub.dartlang.org/packages/angular_fire)
+[![pub package](https://img.shields.io/pub/v/angular_fire.svg)](https://pub.dartlang.org/packages/angular_fire)
 [![Build Status](https://travis-ci.org/matanlurey/angular_fire.svg)](https://travis-ci.org/matanlurey/angular_fire)
 
 * [Install](#install)
