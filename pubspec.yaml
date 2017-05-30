@@ -21,7 +21,10 @@ dev_dependencies:
 
 transformers:
   # Ahead-of-time compilation (required in AngularDart ^4.0.0).
-  - angular2/transform/codegen
+  - angular2/transform/codegen:
+      # No longer required in ^4.0.0.
+      resolved_identifiers:
+          App: package:firebase/firebase.dart
 
   # These transformers are only invoked when using this package itself.
   - angular2/transform/reflection_remover:

@@ -10,7 +10,9 @@
 
 * [Install](#install)
 * [Usage](#usage)
-  * [Components](#components)
+  * [Services](#services)
+    * [FirebaseAuth](#firebase-auth)
+  * [Directives](#directives)
     * [GoogleSignInComponent](#google-sign-in-component)
 * [Contributing](#contributing)
   * [Testing](#testing)
@@ -38,6 +40,38 @@ To get started, you need to, at minimum, include the Firebase SDK:
 
 ## Usage
 
+### Services
+
+#### FirebaseAuth
+
+A high-level authentication service. First setup for dependency injection:
+
+```dart
+import 'package:angular2/angular2.dart';
+import 'package:angular2/platform/browser.dart';
+import 'package:angular_fire/angular_fire.dart';
+import 'package:firebase/firebase.dart' as sdk;
+
+main() {
+  bootstrap(AngularFireExample, <dynamic>[
+    provide(
+      FirebaseAuth,
+      useValue: new FirebaseAuth(
+        sdk.initializeApp(
+          apiKey: '...',
+          authDomain: '...',
+          databaseURL: '...',
+          storageBucket: '...',
+        ),
+      ),
+    ),
+  ]);
+}
+```
+
+Then inject into your app and use. See [GoogleSignInComponent](#google-sign-in-component)
+below for an example.
+
 ### Components
 
 #### GoogleSignInComponent
@@ -48,8 +82,6 @@ Displays a rendered sign in box for Google authentication that follows the
 <img src="https://cloud.githubusercontent.com/assets/168174/26565270/896f1ac6-449e-11e7-8e7a-967547e5fb65.png" height="600" />
 
 ```dart
-import 'dart:html';
-
 import 'package:angular2';
 import 'package:angular_fire/angular_fire.dart';
 
@@ -59,16 +91,15 @@ import 'package:angular_fire/angular_fire.dart';
     GoogleSignInComponent,
   ],
   template: r'''
-    <google-sign-in (trigger)="onTrigger()">
-    </google-sign-in>
-    
-    <google-sign-in [useDarkTheme]="true" (trigger)="onTrigger()">
+    <google-sign-in (trigger)="signIn()">
     </google-sign-in>
   ''',
 )
 class AngularFireExample {
+  final FirebaseAuth _auth;
+  
   void onTrigger() {
-    window.alert('Pressed!');
+    _auth.signIn();
   }
 }
 ```
@@ -77,6 +108,27 @@ class AngularFireExample {
 `web/assets` directory, or use the `[assetPath]` property, or the 
 `googleSignInAssetPath` token at `bootstrap` time to configure the location of
 your assets - for example on an external CDN.
+
+#### IfFirebaseAuthDirective
+
+Like `ngIf`, but shows content if the value matches the current authentication:
+
+```html
+<div *ifFirebaseAuth="true; let currentUser = currentUser">
+  Logged in as: {{currentUser.displayName}}.
+  <button (click)="signOut()">Sign Out</button>
+</div>
+
+<div *ifFirebaseAuth="false">
+  Waiting for sign in...
+
+  <br>
+
+  <google-sign-in
+      (trigger)="signIn()">
+  </google-sign-in>
+</div>
+```
 
 ## Contributing
 
