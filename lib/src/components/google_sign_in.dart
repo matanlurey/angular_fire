@@ -147,7 +147,6 @@ class GoogleSignInComponent {
     const prefix = 'btn_google_signin_';
     final asset = '$prefix${_useDarkTheme ? 'dark' : 'light'}_${_status}_web';
     final suffix = _isHighResolution ? '@2x' : '';
-    print('$asset$suffix');
     _element.style.backgroundImage = 'url($_assetPath$asset$suffix.png)';
   }
 

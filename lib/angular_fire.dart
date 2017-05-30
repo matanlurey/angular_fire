@@ -4,3 +4,6 @@
 
 export 'src/components/google_sign_in.dart'
     show googleSignInAssetPath, googleSignInDarkTheme, GoogleSignInComponent;
+
+export 'src/directives/firebase_auth.dart'
+    show FirebaseAuth, FirebaseUser, IfFirebaseAuthDirective;
