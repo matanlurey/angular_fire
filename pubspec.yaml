@@ -1,7 +1,7 @@
 name: angular_fire
 description: >
   Unofficial library for AngularDart and Firebase.
-version: 0.1.0
+version: 0.1.1
 authors:
   - Matan Lurey <matanl@google.com>
 homepage: https://github.com/matanlurey/angular_fire
