@@ -1,0 +1,39 @@
+name: angular_fire
+description: >
+  Unofficial library for AngularDart and Firebase.
+version: 0.1.0
+authors:
+  - Matan Lurey <matanl@google.com>
+homepage: https://github.com/matanlurey/angular_fire
+
+environment:
+  sdk: ">=1.22.0 <2.0.0"
+
+dependencies:
+  angular2: ^3.0.0
+  firebase: ^3.0.0
+  meta: ^1.0.5
+
+dev_dependencies:
+  angular_test: 1.0.0-beta+1
+  dart_to_js_script_rewriter: ^1.0.1
+  test: ^0.12.20+8
+
+transformers:
+  # Ahead-of-time compilation (required in AngularDart ^4.0.0).
+  - angular2/transform/codegen
+
+  # These transformers are only invoked when using this package itself.
+  - angular2/transform/reflection_remover:
+      $include: ["test/google_sign_in_test.dart", "web/main.dart"]
+
+  # Allow test to proxy-load files so we can run AoT tests w/ pub serve.
+  - test/pub_serve:
+      $include: test/**_test.dart
+
+  # Optimize code-size since we may deploy to gh-pages or similar.
+  - $dart2js:
+      commandLineOptions: ['--trust-type-annotations', '--trust-primitives']
+
+  - dart_to_js_script_rewriter:
+      $include: ["web/index.html"]

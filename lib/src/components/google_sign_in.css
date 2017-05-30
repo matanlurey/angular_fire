@@ -1,0 +1,12 @@
+:host {
+  background-size: 191px 46px;
+
+  display: inline-block;
+  width: 191px;
+  height: 46px;
+}
+
+/* We are using a custom focus image. */
+:host:focus {
+  outline: none !important;
+}
