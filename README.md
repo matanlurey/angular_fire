@@ -94,7 +94,7 @@ changes (like documentation, bug fixes), just send a pull request.
 
 ### Testing
 
-Run the (simple) test suite in Dartium:
+Run the (simple) test suite in Dartium. It doesn't currently run on Travis:
 
 ```shell
 $ pub run angular_test -p dartium
