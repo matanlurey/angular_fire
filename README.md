@@ -84,7 +84,7 @@ Displays a rendered sign in box for Google authentication that follows the
 <br>
 
 ```dart
-import 'package:angular2';
+import 'package:angular2/angular2.dart';
 import 'package:angular_fire/angular_fire.dart';
 
 @Component(
