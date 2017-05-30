@@ -2,6 +2,7 @@
 
 - Removed a `print` statement that was always occurring.
 - Added a high-level `FirebaseAuth` class, and Google sign-in.
+- Added `IfFirebaseAuthDirective`.
 
 ## 0.1.0
 

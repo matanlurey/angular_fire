@@ -14,6 +14,7 @@
     * [FirebaseAuth](#firebase-auth)
   * [Directives](#directives)
     * [GoogleSignInComponent](#google-sign-in-component)
+    * [IfFirebaseAuthDirective](#if-firebase-auth-directive)
 * [Contributing](#contributing)
   * [Testing](#testing)
 
