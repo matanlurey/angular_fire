@@ -5,6 +5,9 @@
   </p>
 </p>
 
+[![pub package](https://img.shields.io/pub/v/angular_fire.svg)](https://pub.dartlang.org/packages/angular_fire)
+[![Build Status](https://travis-ci.org/matanlurey/angular_fire.svg)](https://travis-ci.org/matanlurey/angular_fire)
+
 * [Install](#install)
 * [Usage](#usage)
   * [Components](#components)
@@ -42,7 +45,7 @@ To get started, you need to, at minimum, include the Firebase SDK:
 Displays a rendered sign in box for Google authentication that follows the
 [branding guidelines](https://developers.google.com/identity/branding-guidelines).
 
-![GoogleSignInComponent](https://cloud.githubusercontent.com/assets/168174/26565270/896f1ac6-449e-11e7-8e7a-967547e5fb65.png)
+<img src="https://cloud.githubusercontent.com/assets/168174/26565270/896f1ac6-449e-11e7-8e7a-967547e5fb65.png" height="600" />
 
 ```dart
 import 'dart:html';
@@ -91,7 +94,7 @@ changes (like documentation, bug fixes), just send a pull request.
 
 ### Testing
 
-Run the (simple) test suite in Dartium:
+Run the (simple) test suite in Dartium. It doesn't currently run on Travis:
 
 ```shell
 $ pub run angular_test -p dartium

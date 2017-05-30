@@ -10,20 +10,10 @@ cache:
   directories:
     - $HOME/.pub-cache
 
-# We are using some non-standard setup, so install Dartium and Xvfb manually.
-before_install:
-  - tool/travis.sh
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3
-
 # Check for analysis issues, run the test cases, and ensure `dartfmt` is run.
 dart_task:
   - dartanalyzer
   - dartfmt
-
-# Run our component tests.
-script:
-  - pub run angular_test -p dartium
 
 # The Dart language is constantly being worked on, and sometimes the dev and
 # stable builds don't agree on what is considered formatted or what is analysis
