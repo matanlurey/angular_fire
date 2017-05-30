@@ -81,6 +81,7 @@ Displays a rendered sign in box for Google authentication that follows the
 [branding guidelines](https://developers.google.com/identity/branding-guidelines).
 
 <img src="https://cloud.githubusercontent.com/assets/168174/26565270/896f1ac6-449e-11e7-8e7a-967547e5fb65.png" height="600" />
+<br>
 
 ```dart
 import 'package:angular2';
