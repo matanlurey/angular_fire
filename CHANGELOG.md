@@ -1,3 +1,20 @@
+## 0.2.1
+
+- Add an option to add additional authorization scopes to `googleSignIn`:
+
+```dart
+// Authenticate and allow read-only access to Google Calendar.
+final user = await firebaseAuth.googleSignIn(
+  scopes: [
+    'https://www.googleapis.com/auth/calendar.readonly',  
+  ],
+);
+
+if (user != null) {
+  // You have access!
+}
+```
+
 ## 0.2.0
 
 - Fixed a bug that flashed signed off content before loading.

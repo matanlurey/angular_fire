@@ -35,15 +35,16 @@ abstract class FirebaseAuth {
   /// Returns a future that completes after authenticated.
   ///
   /// May optionally disable [prompt] if the user is already authenticated.
-  Future<FirebaseUser> googleSignIn({bool prompt: true});
+  Future<FirebaseUser> googleSignIn({
+    bool prompt: true,
+    List<String> scopes: const [],
+  });
 
   /// Sign out of any authenticated account.
   Future<Null> signOut();
 }
 
 class _SdkFirebaseAuth implements FirebaseAuth {
-  static final _googleAuth = new sdk.GoogleAuthProvider();
-
   final sdk.App _app;
   final _onUserChanged = new StreamController<FirebaseUser>.broadcast();
 
@@ -70,12 +71,15 @@ class _SdkFirebaseAuth implements FirebaseAuth {
   @override
   Future<FirebaseUser> googleSignIn({
     bool prompt: true,
+    List<String> scopes: const [],
   }) async {
-    _googleAuth.setCustomParameters(<String, String>{
+    final googleAuth = new sdk.GoogleAuthProvider();
+    scopes.forEach(googleAuth.addScope);
+    googleAuth.setCustomParameters(<String, dynamic>{
       'prompt': prompt ? 'select_account' : 'none',
     });
     try {
-      final user = await _app.auth().signInWithPopup(_googleAuth);
+      final user = await _app.auth().signInWithPopup(googleAuth);
       return new FirebaseUser._fromSdk(user.user);
     } catch (_) {
       return null;
