@@ -33,23 +33,27 @@ abstract class FirebaseAuth {
   Stream<FirebaseUser> currentUser();
 
   /// Returns a future that completes after authenticated.
-  Future<FirebaseUser> googleSignIn();
+  ///
+  /// May optionally disable [prompt] if the user is already authenticated.
+  Future<FirebaseUser> googleSignIn({bool prompt: true});
 
   /// Sign out of any authenticated account.
   Future<Null> signOut();
 }
 
 class _SdkFirebaseAuth implements FirebaseAuth {
-  static final sdk.AuthProvider _googleAuth = new sdk.GoogleAuthProvider();
+  static final _googleAuth = new sdk.GoogleAuthProvider();
 
   final sdk.App _app;
   final _onUserChanged = new StreamController<FirebaseUser>.broadcast();
 
   FirebaseUser _currentUser;
+  bool _wasInitialized = false;
 
   _SdkFirebaseAuth(this._app) {
     _app.auth().onAuthStateChanged.listen((event) {
       final user = event.user;
+      _wasInitialized = true;
       _currentUser = user != null ? new FirebaseUser._fromSdk(user) : null;
       _onUserChanged.add(_currentUser);
     });
@@ -57,14 +61,25 @@ class _SdkFirebaseAuth implements FirebaseAuth {
 
   @override
   Stream<FirebaseUser> currentUser() async* {
-    yield _currentUser;
+    if (_wasInitialized) {
+      yield _currentUser;
+    }
     yield* _onUserChanged.stream;
   }
 
   @override
-  Future<FirebaseUser> googleSignIn() async {
-    final user = await _app.auth().signInWithPopup(_googleAuth);
-    return new FirebaseUser._fromSdk(user.user);
+  Future<FirebaseUser> googleSignIn({
+    bool prompt: true,
+  }) async {
+    _googleAuth.setCustomParameters(<String, String>{
+      'prompt': prompt ? 'select_account' : 'none',
+    });
+    try {
+      final user = await _app.auth().signInWithPopup(_googleAuth);
+      return new FirebaseUser._fromSdk(user.user);
+    } catch (_) {
+      return null;
+    }
   }
 
   @override
@@ -132,6 +147,7 @@ class IfFirebaseAuthDirective implements OnDestroy, OnInit {
   bool _lastCondition;
   FirebaseUser _currentUser;
   StreamSubscription<FirebaseUser> _userSub;
+  bool _wasInitialized = false;
 
   IfFirebaseAuthDirective(
     this._authService,
@@ -142,7 +158,9 @@ class IfFirebaseAuthDirective implements OnDestroy, OnInit {
   @Input()
   set ifFirebaseAuth(bool newCondition) {
     _checkCondition = newCondition;
-    _toggle(_checkCondition ? _currentUser != null : _currentUser == null);
+    if (_wasInitialized) {
+      _toggle(_checkCondition ? _currentUser != null : _currentUser == null);
+    }
   }
 
   @override
@@ -155,6 +173,7 @@ class IfFirebaseAuthDirective implements OnDestroy, OnInit {
     _userSub = _authService.currentUser().listen((user) {
       _currentUser = user;
       _toggle(_checkCondition ? _currentUser != null : _currentUser == null);
+      _wasInitialized = true;
     });
   }
 
