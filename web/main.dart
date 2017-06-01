@@ -59,7 +59,9 @@ class AngularFireExample {
   AngularFireExample(this._auth);
 
   void signIn() {
-    _auth.googleSignIn();
+    _auth.googleSignIn(scopes: [
+      'https://www.googleapis.com/auth/calendar.readonly',
+    ]);
   }
 
   void signOut() {
