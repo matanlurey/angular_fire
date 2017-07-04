@@ -20,12 +20,10 @@ void main() {
     await fixture.update((_) => button.click());
     expect(fixture.text, contains('Pressed: 1'));
 
-    expect(
-      button.getComputedStyle().backgroundImage,
-      startsWith(
-        'url(http://localhost:8080/assets/btn_google_signin_light_normal_web',
-      ),
-    );
+    final regexp = new RegExp(
+        r'^url\("http://localhost:\d+/assets/btn_google_signin_light_normal_web');
+
+    expect(button.getComputedStyle().backgroundImage, matches(regexp));
   });
 }
 
